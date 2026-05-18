@@ -1,6 +1,7 @@
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
+import matplotlib.pyplot as plt
 
 # --- 1. CONTROL SYSTEM SETUP (Loaded Once) ---
 
@@ -68,10 +69,7 @@ while True:
             print("Shutting down the program. Thank you!")
             break
             
-        # Convert to float
         c_type = float(user_cloth)
-        
-        # Check if within valid boundaries
         if c_type < 1 or c_type > 3:
             print("Invalid Input! Cloth Type must be between 1 and 3. Please try again.\n")
             continue
@@ -104,11 +102,14 @@ while True:
         # Compute crisp output
         washing_sim.compute()
         
-        # Format and display the result
         result = washing_sim.output['CycleIntensity']
         print("\n----------------------------------------------")
         print(f" Result (Cycle Intensity): {result:.2f}%")
         print("----------------------------------------------\n")
+
+        # --- Plotting the result ---
+        cycle_intensity.view(sim=washing_sim)
+        plt.show()
 
     except ValueError:
         print("\n Input Error: Please enter a valid number!\n")
